@@ -11,7 +11,8 @@ pipeline {
           sh "echo ${env.BUILD_NUMBER}"
           sh "echo ${env.WORKSPACE}"
           sh "touch archivo.txt"
-          sh "mkdir micarpeta"
+          sh "mkdir -p  micarpeta"
+	  sh "python main.py"
           sh "touch micarpeta/mifile.txt"
         }
       }
