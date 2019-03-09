@@ -38,7 +38,8 @@ pipeline {
            def ID = sh(returnStdout: true, script: "./ami_id.sh ${env.BUILD_NUMBER}").trim()
            sh "./build_ami.sh ${ID}"
          }
-         echo "${env.SLACK_MESSAGE}"
+        sh "git rev-parse HEAD" 
+        echo "${env.SLACK_MESSAGE}"
          echo "${params.SLACK_CHANNEL}"
          echo "${params.TYPE}"
          echo "${params.LC}"
