@@ -58,12 +58,18 @@ pipeline {
   }
  
 post {
-always {
-archiveArtifacts artifacts: "${ARTIFACT}", onlyIfSuccessful: true
-sh "rm -f ${ARTIFACT}"
-echo "Job has finished"
- } 
- 
+   always {
+     archiveArtifacts artifacts: "${ARTIFACT}", onlyIfSuccessful: true
+     sh "rm -f ${ARTIFACT}"
+     echo "Job has finished"
+   }
+   success {
+     slackSendMessage "good"
+   }
+   failure {
+     slackSendMessage "danger"
+   }
+ }
 }
 def slackSendMessage(String color) {
  slackSend channel: "${params.SLACK_CHANNEL}",
