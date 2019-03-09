@@ -42,6 +42,9 @@ pipeline {
          echo "${params.SLACK_CHANNEL}"
          echo "${params.TYPE}"
          echo "${params.LC}"
+        sh "zip -r ${env.ARTIFACT} ./"
+archiveArtifacts artifacts: "${env.ARTIFACT}", onlyIfSuccessful: true
+sh "rm -f ${env.ARTIFACT}"
        }
      }
      stage('Deploy') {
