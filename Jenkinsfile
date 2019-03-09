@@ -1,10 +1,24 @@
 pipeline {
-  agent any
-    stages {
-      stage('Repository') {
-        steps {
-           echo "checkout scm"
-        }
+ agent any
+ options {
+   ansiColor('xterm')
+   timestamps()
+   timeout(time: 10, unit: 'MINUTES')
+ }
+  
+ environment {
+   ARTIFACT = "${env.BUILD_NUMBER}.zip"
+   SLACK_MESSAGE = "Job ${env.JOB_NAME} Build ${env.BUILD_NUMBER} URL ${env.BUILD_URL}"
+ }
+
+ parameters {
+   string(name: 'SLACK_CHANNEL', defaultValue: '#deploys', description: '')
+   choice(name: 'TYPE', choices: 'aut\ncron\ndata', description: 'Autoscaling, Cron or Data')
+   booleanParam(name: 'LC', defaultValue: false, description: 'Update aws launch configuration with th
+e new ami')
+ }
+
+
 
    stages {
      stage('Repository') {
@@ -12,9 +26,7 @@ pipeline {
           checkout scm
        }
      }
-   }
-     
-stage('Test') {
+     stage('Test') {
        steps {
          parallel (
            sintaxis: { sh "echo check_syntax" },
@@ -53,4 +65,3 @@ stage('Test') {
      }
   }
 }
-
