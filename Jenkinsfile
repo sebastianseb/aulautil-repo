@@ -1,17 +1,20 @@
 pipeline {
- agent any
- options {
-   ansiColor('xterm')
-   timestamps()
-   timeout(time: 10, unit: 'MINUTES')
- }
+  agent any
+    stages {
+      stage('Repository') {
+        steps {
+           echo "checkout scm"
+        }
+
    stages {
      stage('Repository') {
        steps {
           checkout scm
        }
      }
-     stage('Test') {
+   }
+     
+stage('Test') {
        steps {
          parallel (
            sintaxis: { sh "echo check_syntax" },
@@ -28,7 +31,10 @@ pipeline {
          sh "mkdir -p micarpeta"
          sh "touch micarpeta/mifile.txt"
          sh "python main.py"
-         
+         script {
+           def ID = sh(returnStdout: true, script: "./ami_id.sh ${env.BUILD_NUMBER}").trim()
+           sh "./build_ami.sh ${ID}"
+         }
          echo "${env.SLACK_MESSAGE}"
          echo "${params.SLACK_CHANNEL}"
          echo "${params.TYPE}"
