@@ -57,6 +57,15 @@ pipeline {
        }
      }
   }
+stage ('Apply') {
+       input {
+         message "Are you sure?"
+         ok "Yes"
+       }
+       steps {
+         echo "Aplicamos el cambio"
+       }
+     }
  
 post {
    always {
