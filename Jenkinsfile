@@ -46,6 +46,15 @@ pipeline {
         sh "zip -r ${env.ARTIFACT} ./"
        }
      }
+    stage ('Apply') {
+       input {
+         message "Are you sure?"
+         ok "Yes"
+       }
+       steps {
+         echo "Aplicamos el cambio"
+       }
+     }
      stage('Deploy') {
        when {
          expression {
@@ -57,15 +66,6 @@ pipeline {
        }
      }
   }
-stage ('Apply') {
-       input {
-         message "Are you sure?"
-         ok "Yes"
-       }
-       steps {
-         echo "Aplicamos el cambio"
-       }
-     }
  
 post {
    always {
