@@ -6,19 +6,25 @@ jobs:
   call:
     runs-on: ubuntu-latest
     steps:
-
-      - name: add cena file using curl
-        id: curl 
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Add cena file using curl
         run: |
-          
           ENC_CONTENT=$(curl --location 'https://api.github.com/repos/sebastianseb/limoneno-frontend/contents/testing.yml' --header 'Accept: application/vnd.github.raw' --header 'Authorization: Bearer ${{ secrets.TOKEN }}' --header 'X-GitHub-Api-Version: 2022-11-28' | base64)
           echo $ENC_CONTENT
           
           curl -X PUT \
-          -H "Accept: application/json" \
-          -H "Authorization: Bearer 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"\
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          -d '{"message":"add cena file","committer":{"name":"Romel","email":"romelsreyes@gmail.com"},"content":"'"$ENC_CONTENT"'", "branch": "develop"}' \
-          https://api.github.com/repos/sebastianseb/limoneno-backend/contents/testing.yml \
-
-      
+            -H "Accept: application/json" \
+            -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -d '{
+              "message": "add cena file",
+              "committer": {
+                "name": "Romel",
+                "email": "romelsreyes@gmail.com"
+              },
+              "content": "'"$ENC_CONTENT"'",
+              "branch": "develop"
+            }' \
+            https://api.github.com/repos/sebastianseb/limoneno-backend/contents/testing.yml
