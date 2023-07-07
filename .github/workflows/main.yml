@@ -12,8 +12,9 @@ jobs:
       - name: Add cena file using curl
         run: |
           ENC_CONTENT=$(curl --location 'https://api.github.com/repos/sebastianseb/limoneno-frontend/contents/testing.yml' --header 'Accept: application/vnd.github.raw' --header 'Authorization: Bearer ${{ secrets.TOKEN }}' --header 'X-GitHub-Api-Version: 2022-11-28' | base64)
+          echo "imprimir contenido de testing.yml"
           echo $ENC_CONTENT
-          
+          echo "hacer commit en repositorio limoneno-backend"
           curl -X PUT \
             -H "Accept: application/json" \
             -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
