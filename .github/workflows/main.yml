@@ -16,7 +16,7 @@ jobs:
           echo $ENC_CONTENT
           echo "hacer commit en repositorio limoneno-backend"
           curl -X PUT \
-            -H "Accept: application/json" \
+            -H "Accept: vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -d '{
