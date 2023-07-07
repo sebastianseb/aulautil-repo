@@ -11,7 +11,7 @@ jobs:
         id: curl 
         run: |
           
-          ENC_CONTENT=$(curl  --header 'Accept: application/vnd.github.raw' --header 'Authorization: Bearer ${{ secrets.TOKEN }}' --header 'X-GitHub-Api-Version: 2022-11-28' -o 'testing.yaml' 'https://api.github.com/repos/sebastianseb/limoneno-frontend/contents/testing.yaml' | base64)
+          ENC_CONTENT=$(curl --location 'https://api.github.com/repos/sebastianseb/limoneno-frontend/contents/testing.yml' --header 'Accept: application/vnd.github.raw' --header 'Authorization: Bearer ${{ secrets.TOKEN }}' --header 'X-GitHub-Api-Version: 2022-11-28' | base64)
           echo $ENC_CONTENT
           
           curl -X PUT \
